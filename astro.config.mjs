@@ -6,5 +6,6 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
+  //LEVANTA EL CONSTRUCTOR DE TAILWIND Y MDX PPARA PODER UTILIZARLO EN LAS PAGINAS 
   integrations: [tailwind(), mdx()]
 });

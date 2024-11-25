@@ -3,20 +3,32 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Layouts from "../../Layouts/Layouts.astro";
 
+//EXPORTAMOS UNA FUNCION ASINCRONA, OCUPO QUE ESTA FUNCION SE LEA ANTES DE QUE CONTINUE CON EL RESTO DEL CODIGO 
+//ESTO LO EJECUTA ASTRO CUANDO HACEMOS UN NPM RUI BUILD, ASTRO DETECTA UN ARCHIVO DE TIPO SLUG, BUSCA LA FUNCION getStaticPaths() PARA PODER COINSTRUIR TODA LA PAGINA DE LA LOGICA QUE ESTAMOS COLOCANDPO
+//CUANDO EJECUTAMOS CON NPM RUN DEV LO QUE HACE ES QUE DE FORMA DINAMICA CONSTRUYE TODO EL HTML PARA HACER MAS RAPIDO EL DESARROLLO 
+
 export async function  getStaticPaths(){
 
+    //QUIERO QUE SE LEA DE LA CARPETA DE PROJECTS Y QUE DUEVUELVA EL MAPEADO DE TODOS LOS ARCHIVOS CON SU METADATA
     const projects = await getCollection("projects");
+
+    //RETORNARLO RECORRIENDO PROJECTS 
     return projects.map
     ( 
         p => 
         ( 
             { 
-                params: { slug: p.slug } , props: { p } 
+                //params es un objeto que contiene los parámetros de la ruta, PARAMS VA A SER A NIVEL DE SLUG CUAL VA A HACER LA RUTA QUE EL VA A CONSTRUIR FISICAMENTE DENTRO DE LAS CARPETAS CUANDO HAGAMOS EL BUILD
+                params: { slug: p.slug } 
+                
+                //PROPIEDADES QUE LE VOY A QUERER INYECTAR A LA PAGINA QUE SE VA A CONSTRUIR DE FORMA DINAMICA 
+                , props: { p } 
             } 
         )
     )
 }
 
+//NOS V A AYUDAR A PODER INTERACTUAR CON LOS ELEMENTOS QUE NOSOTROS VAMOS A IR ITERANDO UNA VEZ EL CONSTRUCTOR DE ASTRO EMPIECE A CONSTRUIR DINAMICAMENTE CADA UNA DE LAS PAGINAS MDX
 interface Prop {
     p: {
         slug: string;
@@ -24,15 +36,21 @@ interface Prop {
             title: string;
             shortDescription: string;
         };
+
+        //FUNCION QUE SE LLAMA RENDER, VA A TENER UNA PROMESA DE JAVASCRIPT 
         render: () => Promise< { Content: any; heading: any[] } >;
     }
 }
 
+//INYECTAMOS P 
 const { p } = Astro.props;
+
+//INYECTAMOS LOS CONTENIDOS Y LOS HEADING, HACEMOS UN AWAIT P.RENDER PARA PODER OBTENER LA INFORMACION DE RENDER 
 const { Content, headings} = await p.render();
 
 ---
-<Layouts title={p.data.title}>
+<Layouts title={p.data.title} header={p.data.Encabezado}>
+
   <div class="max-w-4xl mx-auto px-4 py-8">
       <h1 class="text-4xl font-bold text-white mb-4">{p.data.title}</h1>
       <p class="text-xl text-white mb-8">{p.data.description}</p>
@@ -49,6 +67,8 @@ const { Content, headings} = await p.render();
           </ul>
       </nav>
       <article class="prose prose-white lg:prose-lg max-w-none bg-[#222323] p-4 rounded-lg text-white text-lg"> <!-- Aumentar tamaño del texto en el artículo -->
+
+        {/*EL CONTENT NOS AYUDA A TRAER EL CONTENIDO DEL ARCHIVO MDX*/}
           <Content />
       </article>
   </div>
