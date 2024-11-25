@@ -1,100 +1,66 @@
---- 
-//ENCAPSULAMOS TODO EL CODIGO DE UN COMPONENTE Y LO AGREGAMOS A UNA VARIABLE
-import Layout from "../Layouts/Layouts.astro" 
-import TechCard from "../Components/TechCard.astro" 
+---
+// Importamos los componentes necesarios
+import Layout from "../Layouts/Layouts.astro";
+import TechCard from "../Components/TechCard.astro";
 import ProjectCards from "../Components/ProjectCards.astro";
 
-//ME VA A AYUDAR A TRAER TODA LA INFORMACION ALMACENADA EN UNA CARPETA 
-//ESTA FUNCION PERMITE ACCEDER Y MANIPULAR ARCHIVOS MDX 
+// Importamos la función para obtener los proyectos desde los archivos MDX
 import { getCollection } from "astro:content";
 
-
-//INTERFAZ DE LOS TECHITEM, EL NOMBRE POR EJEMPLO DESARROLLO WEB Y TECH ES HTML, CSS ETC
+// Definimos las interfaces de tipos de datos que vamos a manejar
 interface TechItem { 
- title: string; 
- tech: string[]; 
-} 
-
-
-//CREAMOS UNA NUEVA INTERFAZ 
-//VA A TENER UN ATRIBUTO LLAMADO SLUG, LO QUE HACE ES EXTRAER EL NOMBRE DEL ARCHIVO QUE VAMOS A TRAER
-//EL ATRIBUTO DATA VA A TENER COMO ATRIBUTO LO QUE HAYAMOS DEFINIDO EN LA METADATA DEL ARCHIVO MDX 
-interface ProjectItem{
-    slug: string;
-    data:
-    {
-        title: string;
-        ShortDescription: string;
-
-    }
+  title: string; 
+  tech: string[]; 
 }
 
-//LEER EN UNA VARIABLE EL ARREGLO DE TODOS LOS ARCHIVOS QUE SE ENCUENTRAN EN UNA CARPETA EN PARTICULAR 
-//DECLARAMOS LA VARIABLE projects Y TAMBIEN EN EL getCollection("projects") DECLARAMOS DE DONDE VAMOS A QUERER LEER LOS ARCHIVOS, EN ESTE CASO DE projects
-//EL AWAIT, ESPERA A QUE SE CARGUEN LAS DEPENDENCIAS AL INGRESAR A LA PAGINA. GARANTIZAR QUE YA SE LEYERON TODOS LOS ARCHIVOS QUE TENEMOS EN PROJECTS
-const projects: ProjectItem[] = await getCollection("projects")
+interface ProjectItem{
+  slug: string;
+  data: {
+    title: string;
+    ShortDescription: string;
+  }
+}
 
-//ES UN ARREGLO DE TECHITEM DE ARRIBA Y COLOCA CADA UNO DE LOS ELEMENTOS QUE VOY A QUERER ITERAR
-//SE DEFINE LA CONSTANTE techItems QUE ES DEL TIPO TECHITEM Y ES UN ARREGLO DE LA INTERFAZ TECHITEM, INMEDIATAMENTE A LA LISTA LE ASIGNO CADA UNO DE SUS OBJETOS 
+// Obtenemos la colección de proyectos desde los archivos MDX
+const projects: ProjectItem[] = await getCollection("projects");
+
+// Definimos los elementos de tecnologías que se mostrarán
 const techItems: TechItem[] = [ 
+  { 
+    title: "Desarrollo Web", 
+    tech: ["HTML", "CSS", "JavaScript", "DexExtreme"] 
+  }, 
+  { 
+    title: "Lenguajes de Programacion", 
+    tech: ["C#", "C++", "Java"] 
+  }, 
+  { 
+    title: "Herramientas", 
+    tech: ["VS Code", "Visual Studio", "MySQL WorkBench"] 
+  } 
+];
+---
 
- { 
-  title: "Desarrollo Web", 
-  tech: ["HTML", "CSS", "JavaScript", "DexExtreme"] 
- }, 
- { 
-  title: "Lenguajes de Programacion", 
-  tech: ["C#", "C++", "Java"] 
- }, 
- { 
-  title: "Herramientas", 
-  tech: ["VS Code", "Visual Studio", "MySQL WorkBench"] 
- } 
-] 
---- 
-<Layout title="Profile"> 
-   
+<Layout title="Profile" header="Mi Encabezado">   
+  <section id="technologies" class="mb-8"> 
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Mis Habilidades</h2> 
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4"> 
+      { techItems.map((item) => ( 
+        <TechCard title={item.title} tech={item.tech} /> 
+      )) }
+    </div> 
+  </section> 
 
-    <section id="technologies" class="mb-8"> 
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Mis Habilidades</h2> 
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4"> 
-            
-            {/* - HACEMOS LA ITERACION, AQUI ESTOY RECORRIENDO A TECHITEM, TECH ITEM ES LA const echItems: TechItem[] =  QUE DEFINIMOS ARRIBA
-                - AQUI ITEM TOMA EL VALOR DE CADA UNO DE LOS OBJETOS, TANTO TITLE COMO TECH
-                - map es una función de los arreglos en JavaScript que permite aplicar una función a cada elemento del arreglo y devuelve un nuevo arreglo con los resultados.
-            */}
-            
-            { techItems.map( ( item ) => ( 
-                <TechCard title={item.title} tech={ item.tech } /> 
-            ) ) } 
-        </div> 
-    </section> 
-
-    
-
-    <section id="projects"> 
-
-
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Proyectos Trabajados</h2> 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    
-            {//CONSTRUCCION DINAMICA DEL PROJECTCARD
-            //SE COLOCA EL NOMBRE DE LA VARIABLE QUE VA A RECORRER CADA UNO DE LOS ELEMENTOS DE NUESTRO ARREGLO Y QUIERO QUE AUTOMATICAMENTE ME RETORNE UN HTML
-            //COLOCAMOS DINAMICAMENTE EL VALOR DE JAVASCRIP DEL DATO AL QUE VOY ACCEDER, RENDERIZA LA INFORMACION QUE COLOCAMOS EN EL METADATA
-            }
-                { projects.map
-                    ( (p) => 
-                        ( 
-                            <ProjectCards
-                            title={p.data.title}
-                            description={p.data.ShortDescription}
-                            link={`/projects/${p.slug}`}
-                            />
-                        )
-                    )}
-            
-            </div> 
-        </div> 
-    </section> 
-</main> 
+  <section id="projects">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Proyectos Trabajados</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      { projects.map((p) => (
+        <ProjectCards
+          title={p.data.title}
+          description={p.data.ShortDescription}
+          link={`/projects/${p.slug}`}
+        />
+      ))}
+    </div> 
+  </section> 
+</Layout>
