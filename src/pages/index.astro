@@ -1,10 +1,7 @@
 ---
-// Importamos los componentes necesarios
 import Layout from "../Layouts/Layouts.astro";
 import TechCard from "../Components/TechCard.astro";
 import ProjectCards from "../Components/ProjectCards.astro";
-
-// Importamos la función para obtener los proyectos desde los archivos MDX
 import { getCollection } from "astro:content";
 
 // Definimos las interfaces de tipos de datos que vamos a manejar
@@ -13,7 +10,7 @@ interface TechItem {
   tech: string[]; 
 }
 
-interface ProjectItem{
+interface ProjectItem {
   slug: string;
   data: {
     title: string;
@@ -23,6 +20,9 @@ interface ProjectItem{
 
 // Obtenemos la colección de proyectos desde los archivos MDX
 const projects: ProjectItem[] = await getCollection("projects");
+
+// Ordenamos los proyectos para mostrar los más recientes primero invirtiendo el orden de la lista
+projects.reverse();
 
 // Definimos los elementos de tecnologías que se mostrarán
 const techItems: TechItem[] = [ 
@@ -45,16 +45,16 @@ const techItems: TechItem[] = [
   <section id="technologies" class="mb-8"> 
     <h2 class="text-3xl font-bold text-gray-800 mb-4">Mis Habilidades</h2> 
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4"> 
-      { techItems.map((item) => ( 
+      {techItems.map((item) => ( 
         <TechCard title={item.title} tech={item.tech} /> 
-      )) }
+      ))}
     </div> 
   </section> 
 
   <section id="projects">
     <h2 class="text-3xl font-bold text-gray-800 mb-4">Proyectos Trabajados</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      { projects.map((p) => (
+      {projects.map((p) => (
         <ProjectCards
           title={p.data.title}
           description={p.data.ShortDescription}
@@ -64,3 +64,4 @@ const techItems: TechItem[] = [
     </div> 
   </section> 
 </Layout>
+
