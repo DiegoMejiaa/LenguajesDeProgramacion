@@ -43,7 +43,7 @@ const techItems: TechItem[] = [
 
 <Layout title="Profile" header="">   
   <section id="technologies" class="mb-8"> 
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Mis Habilidades</h2> 
+    <h2 class="text-3xl font-bold text-white mb-4">Mis Habilidades</h2> 
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4"> 
       {techItems.map((item) => ( 
         <TechCard title={item.title} tech={item.tech} /> 
@@ -52,7 +52,7 @@ const techItems: TechItem[] = [
   </section> 
 
   <section id="projects">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Proyectos Trabajados</h2>
+    <h2 class="text-3xl font-bold text-white mb-4">Proyectos Trabajados</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {projects.map((p) => (
         <ProjectCards

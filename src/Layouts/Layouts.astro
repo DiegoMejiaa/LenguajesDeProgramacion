@@ -18,7 +18,7 @@ const { title, header } = Astro.props;
     <link rel="stylesheet" href="/src/styles/wave.css">
     <title>{title}</title>
 </head>
-<body class="bg-gradient-to-br from-[#69d9e7] to-[#2f2b28 min-h-screen flex flex-col">
+<body class="bg-gradient-to-br from-[#69d9e7] to-black min-h-screen flex flex-col">
     <div class="flex flex-row flex-grow">
         <!-- Barra lateral -->
         <div class="w-64 bg-black text-white flex flex-col h-screen">
@@ -28,7 +28,7 @@ const { title, header } = Astro.props;
         <div class="flex-grow flex flex-col">
             <main class="flex-grow max-w-4xl mx-auto mt-10 px-8">
                 <!-- Usar la propiedad 'header' en el contenido principal -->
-                <h1>{header}</h1> <!-- Aquí se usa la propiedad header -->
+                <h1 class="text-white">{header}</h1> <!-- Texto en blanco para mayor visibilidad -->
                 <slot />
             </main>
             <Footer class="mt-auto"/> <!-- Asegurar que el footer se empuje hacia abajo -->

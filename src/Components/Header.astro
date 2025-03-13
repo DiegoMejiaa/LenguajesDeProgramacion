@@ -1,25 +1,26 @@
-<nav class="bg-white shadow-lg w-64 h-screen flex flex-col justify-center items-center"> <!-- Barra lateral con alto completo, flex y centrado -->
-    <div class="flex flex-col items-center p-4"> <!-- Alineación central y Padding para separación -->
+<nav class="bg-[#141414] shadow-lg w-64 h-screen flex flex-col justify-center items-center text-white"> 
+  <div class="flex flex-col items-center p-4"> 
       <!-- Imagen de perfil -->
-      <img src="/imagen/foto.png" alt="Foto de Diego Mejia Acosta" class="w-32 h-32 rounded-full mb-2" /> <!-- Tamaño de imagen ajustado -->
+      <img src="/imagen/foto.png" alt="Foto de Diego Mejia Acosta" class="w-32 h-32 rounded-full mb-2 border-2 border-white" /> 
+      
       <!-- Nombre -->
-      <span class="font-semibold text-gray-500 text-lg mb-2">Diego Mejia Acosta</span>
-      <div class="flex flex-col space-y-2"> <!-- Enlaces en columna -->
-        <a href="/" class="text-light-blue border-b-4 border-light-blue font-semibold">INICIO</a>
-        
+      <span class="font-semibold text-gray-300 text-lg mb-2">Diego Mejia Acosta</span>
+      
+      <div class="flex flex-col space-y-2"> 
+          <a href="/" class="text-blue-400 border-b-4 border-blue-400 font-semibold hover:text-blue-300 transition">
+              INICIO
+          </a>
       </div>
-      <!-- Añadir el nuevo texto debajo -->
-      <div class="mt-4 text-center">
-        <p>Soy un desarrollador web entusiasta que se dedica a idear y construir soluciones efectivas y novedosas.</p>
-        <br>
-
-        <p>CONTACTO: 9844-6105</p><br>
-
-        <p>CORREO: diegoacosta@unah.hn</p><br>
-
-        <p>GITHUB: <a href="https://github.com/DiegoMejiaa" target="_blank">https://github.com/DiegoMejiaa
-        <br>
+      <!-- Información de contacto -->
+      <div class="mt-4 text-center text-gray-300 text-sm">
+          <p class="mb-2">Soy un desarrollador web entusiasta que se dedica a idear y construir soluciones efectivas y novedosas.</p>
+          <p class="font-semibold text-white">CONTACTO: <span class="text-blue-400">9844-6105</span></p>
+          <p class="font-semibold text-white">CORREO: <span class="text-blue-400">diegoacosta@unah.hn</span></p>
+          <p class="font-semibold text-white">
+              <a href="https://github.com/DiegoMejiaa" target="_blank" class="text-blue-400 hover:underline">
+                 
+              </a>
+          </p>
       </div>
-    </div>
-  </nav>
-  
+  </div>
+</nav>

@@ -15,8 +15,8 @@ const { title, tech } = Astro.props;
  
 {/*LO HACEMOS DINAMICO MEDIANTE EL {TITLE}*/}
 <div class="bg-[#222323] p-4 rounded shadow-2xl hover:bg-orange-500 hover:shadow-[4px_4px_30px_rgba(0,0,0,0.5)] hover:scale-105 transition-all duration-300">
-    <h3 class="font-semibold text-lg mb-2 text-black">{title}</h3>
-    <ul class="list-disc list-inside text-black">
+    <h3 class="font-semibold text-lg mb-2 text-white">{title}</h3>
+    <ul class="list-disc list-inside text-white">
 
         {/*AQUI VAMOS A ITERAR EL TECH PARA QUE RETORNE UN HTML, EL TECH.MAP ES EL FOREACH Y LUEGO SE COLOCA EL NOMBRE DE LA VARIABLE QUE VA A TOMAR EL VALOR DE CADA UNO DE LOS ELEMENTOS QUE VAYA RECORRIENDO */}
         {tech.map((t) => (
